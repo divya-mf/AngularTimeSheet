@@ -1,0 +1,528 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+  
+.container{
+    display: flex;
+  flex-direction: column;
+ 
+}
+.formWrapper{
+    left: 25%;
+    /* top: 50%; */
+    position: absolute;
+    width: 50%;
+}
+.container > * {
+    width: 100%;
+  }
+
+.login{
+    display: flex;
+  flex-direction: column;
+  left: 40%;
+    /* top: 50%; */
+    position: fixed;
+}
+.login > * {
+    width: 100%;
+  }
+.margins{
+    margin-bottom: -1.25em;
+    /* padding: 0px; */
+    height: 105px;
+    padding: 3px 0;
+    font-size: 12px;
+}
+.errors{
+    font-size: 12px;
+}
+h1{
+    line-height: 17px;
+}
+  hr {
+    border: 1px solid #f1f1f1;
+  
+  }
+.loginMargins{
+    width:300px;
+    margin-bottom: -1.25em;
+}
+  .signupbtn{
+    padding: 14px 20px;
+    background-color: #4CAF50;
+    color: white;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.8;
+  }
+  button:hover {
+    opacity:1;
+  }
+  .cancelbtn {
+    padding: 14px 20px;
+    background-color: #f44336;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.8;
+    color: white;
+  }
+  .cancelbtn, .signupbtn {
+    float: left;
+    width: 50%;
+  }
+  .form{
+   animation-name: trial;
+    animation-duration: 4s;
+    }
+  @keyframes trial {
+       45% {background-color: lightblue;}
+        85% {background-color: #D3D3D3;} 
+  }
+
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .signin {
+      background-color: #f1f1f1;
+      text-align: center;
+      padding: 15px;
+  }
+
+  .radioSelect {
+    padding: 16px 0px 16px 0px;
+  }
+  @media screen and (max-width: 600px) {
+    .cancelbtn, .signupbtn,.nameDiv input[type=text] {
+      width: 100%;
+    }
+  }
+  
+  p{
+  font-size:13px;
+  }
+  #msg
+  {
+      color:red;
+  }
+  #msg li
+  {
+      line-height:13px;
+       padding-left:20px;
+text-align:left;
+
+  }
+  #showData
+  {
+      display:none;
+  }
+  .btn {
+  border: none;
+  color: blueviolet;
+  padding: 4px 8px;
+  font-size: 16px;
+  cursor: pointer;
+  }
+  #dataTable{
+  border-collapse: collapse;
+  }
+  #dataTable th {
+  font-size: 13px;
+  background-color: #4CAF50;
+  color: white;
+  text-align: left;
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #ddd;
+  }
+  #dataTable td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid #ddd;
+  font-size:15px;
+  }
+  #dataTable tr:nth-child(even){
+  background-color: #f2f2f2;
+  }
+  #success{
+      font-family: cursive;
+      width: 220px;
+      background-color:lemonchiffon;
+      color: #55a20e;
+      margin-left: 126px;
+      animation-name: trans;
+      animation-duration: 3s;
+  }
+  @keyframes trans {
+       45% {background-color: yellow;}
+        
+  }
+  #noData{
+      display:none;
+      width: 220px;
+      padding: 8px;
+      
+  }
+  #remove
+  { 
+      color:#f44336;
+  }
+  #search
+  {
+      margin: 10px 0px 5px 510px;
+      border: 1px solid #ccc;
+      /* display: block; */
+      padding: 7px;
+      border-radius: 13px	;
+  }
+  #search:focus{
+      outline: none;
+      border-radius: 13px;
+      border: 1px solid #4CAF50;
+  }
+  .error{
+      
+      font-size: 12px;
+      color: red;
+  }
+  #dbError{
+      margin-left: 222px;
+  }
+  #pwError{
+      margin-left: 230px;
+  }
+  #pwcError{
+      margin-left: 173px;
+  }
+  #mailError{
+      margin-left: 295px;
+  }
+  
+  #fError{
+      margin-left: 40px;
+      
+  }
+  #lError{
+      margin-left: 190px;
+      
+  }
+  #submit:disabled,
+  #submit[disabled]{
+border: 1px solid #999999;
+background-color: #cccccc;
+color: #666666;
+}
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+}
+
+#srch {
+    border-box: box-sizing;
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 14px;
+    padding: 12px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    width: 176px;
+}
+#srch:focus {outline: 3px solid #ddd;}
+
+.dropdown {
+    display: none;
+    position: relative;
+   
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    overflow: auto;
+    border: 1px solid #ddd;
+    z-index: 1;
+}
+#logout{
+    text-decoration:none;
+    margin-left: 1000px;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd; cursor: pointer;}
+
+.show {display: block;}
+#details ul li{
+    list-style-type: none;
+}
+#details{
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 25px;
+    width: 500px;
+    margin: 100px 400px 200px 400px;
+    font-family: cursive;
+    font-size: 18px;
+
+}
+#menu{
+    float: right;
+}
+#userDetails{
+     display: none;
+   background: #333;
+    padding: 35px;
+    border: 2px solid #ddd;
+    float: left;
+    font-size: 1.2em;
+    position: fixed;
+    top: 20%;
+    left: 33%;
+    font-family: cursive;
+    font-size: 18px;
+    z-index: 99999;
+    box-shadow: 0px 0px 20px #999;
+    -moz-box-shadow: 0px 0px 20px #999;
+    color: white;
+
+}
+#userDetails ul li{
+    list-style-type: none;
+    text-align: left;
+}
+#del{
+    margin-left: 340px;
+    display:none;
+}
+#close{
+    margin-left: 340px;
+}
+.btn{
+    margin-left: 440px;
+}
+#editDetails{
+    display: none;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width: 500px;
+    margin: 130px 400px 200px 130px;
+    float: left;
+
+}
+#login{
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    width: 500px;
+    margin: 130px 400px 200px 420px;
+    float: left;
+}
+#login input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+#login input[type="submit"]{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+#msg{
+    color:red;
+}
+//activities style
+
+/* css for activity list view*/
+#activityView{
+	font-family: cursive;
+}
+#addActivity{
+    font-size: 33px;
+    
+}
+#newActivity{
+	border-radius: 5px;
+    background-color: #3f76ad4a;
+    padding: 25px;
+    width: 500px;
+    margin: 100px 400px 200px 400px;
+    font-family: cursive;
+    font-size: 18px;
+
+}
+#newActivity select{
+	  display: inline-block;
+	  border: none;
+	  background: #f1f1f1;
+}
+#newActivity textarea, #date{
+	  
+	  border: none;
+	  background: #f1f1f1;
+}
+#newActivity label{
+    display: block;
+    color:black;
+}
+
+#save{
+	margin-left: 433px;
+    font-size: 24px;
+}
+#msg{
+	display: none;
+	float: right;
+    margin: 15px;
+    background: cornsilk;
+    padding: 5px;
+}
+#error, #errorDate{
+	margin-left: 354px;
+    font-size: 15px;
+    color: red;
+}
+#actTable{
+    width: 100%;
+        border-collapse: unset;
+        border-spacing: 2px;
+}
+#tabHead{
+	background-color: aliceblue;
+}
+#tabBody{
+	background-color: antiquewhite;
+}
+.task{
+	padding:20px;
+	background: lightgoldenrodyellow;
+	margin: 5px;
+}
+#tabBody td{
+        padding: 10px;
+        width: 300px;
+}
+.task li{
+	list-style-type: none;
+}
+#tabHead th {
+	padding:10px;
+	font-size: 18px;
+}
+#cancel{
+	margin-left: 440px;
+    font-size: 24px;
+}
+#back{
+	float: right;
+    margin: 20px;
+    text-decoration: none;
+}
+.priority {
+    color: white;
+    font-family: Arial;
+    padding: 3px;
+    max-width: 100px;
+    float: right;
+    border-radius: 4px;
+    margin: -16px -15px 20px 50px;
+    font-size: 13px;
+    cursor: pointer;
+}
+.creationDate{
+	font-size: 13px;
+    font-family: monospace;
+    /* flex-flow: wrap; */
+    margin-top: -19px;
+    margin-left: -16px;
+    width: 10px;
+    padding: 5px;
+}
+.dueDate{
+	font-size: 13px;
+    font-family: monospace;
+    float: right;
+    color: firebrick;
+}
+.HIGH{
+    background-color: red;
+    padding: 3px;
+    width: 71px;
+    text-align: center;
+    float: right;
+    border-radius: 6px;
+    margin-top: -16px;
+}
+.MEDIUM{
+    background-color: cornflowerblue;
+    padding: 3px;
+    width: 71px;
+    text-align: center;
+    float: right;
+    border-radius: 6px;
+    margin-top: -16px;
+}
+.LOW{
+    background-color: #40e440;
+    padding: 3px;
+    width: 71px;
+    text-align: center;
+    float: right;
+    border-radius: 6px;
+    margin-top: -16px;
+}
+.cSearch{
+    padding: 8px;
+    display: inline-block;
+    border: none;
+    background: #F1F1F9;
+}
+.search{
+	float: right;
+    display: flex;
+    width: 150px;
+}
+.gsearch{
+	
+}
+.float{
+    float:right;
+}
+.global{
+    float: right;
+    /* display: flex; */
+    width: 237px;
+    height: 90px;
+    padding: 15px;
+    font-size: 3px;
+}
+
+  
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
