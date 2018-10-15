@@ -1,4 +1,9 @@
 <mat-toolbar>
   <span>Users & Activities</span>
-  <span><button mat-raised-button color="primary" (click)="logout()" id="logout">Logout</button></span>
+  <div class="headMenu"><span class="navButtons" ><a routerLink="/activities"><button mat-raised-button color="primary" > Activities</button> </a></span>
+    <span class="navButtons" ><button mat-raised-button color="primary" (click)="profile()" >Profile</button></span>
+    <span *ngIf="loggedIn" class="navButtons"><button mat-raised-button color="primary" (click)="logout()">Logout</button></span>
+    </div>
+  
+
 </mat-toolbar>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { User } from './../user';
 import { Activity } from './../activity';
+import { NoteData } from './../note';
 import { environment } from './../../environments/environment'
 import { Observable, of, throwError} from "rxjs"
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
@@ -14,7 +15,6 @@ export class DataService {
   apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
-
   //fetch users from db
   getUsers(){
     return this.http.get(this.apiUrl+'/users')
@@ -62,6 +62,7 @@ export class DataService {
       })
    );
   }
+  
 
   getActivitiesBySearch(dataToSend:any){
     return this.http.post(this.apiUrl+'/activities',{ dataToSend:dataToSend})
@@ -81,9 +82,35 @@ export class DataService {
       })
    );
   }
+  addNote(noteData: NoteData, aId:number) {
+    return this.http.post(this.apiUrl+'/addNoteToActivity',{ noteData, aId:aId})
+    .pipe( 
+      catchError( error => {
+        return throwError( error )
+      })
+   );
+  }
 
   UpdateActivityStatus(id:number, status:string) {
     return this.http.post(this.apiUrl+'/updateStatus', { id: id, status: status })
+    .pipe( 
+      catchError( error => {
+        return throwError( error )
+      })
+   );
+  }
+
+  deleteActivity(id:number) {
+    return this.http.post(this.apiUrl+'/deleteActivity', { id: id})
+    .pipe( 
+      catchError( error => {
+        return throwError( error )
+      })
+   );
+  }
+  
+  getNotes(aId:number) {
+    return this.http.post(this.apiUrl+'/getActivityNotes', { aId: aId})
     .pipe( 
       catchError( error => {
         return throwError( error )

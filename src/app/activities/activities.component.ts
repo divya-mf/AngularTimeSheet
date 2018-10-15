@@ -4,6 +4,7 @@ import { DataService } from '../shared/data.service';
 import { Router } from '@angular/router';
 import { Validator,AbstractControl, ValidationErrors, NG_VALIDATORS, ValidatorFn } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { DOCUMENT } from '@angular/common'; 
 @Component({
   selector: 'app-activities',
   templateUrl: './activities.component.html',
@@ -11,16 +12,25 @@ import { Subscription } from 'rxjs';
 })
 export class ActivitiesComponent implements OnInit {
   activityForm: FormGroup;
+  noteForm: FormGroup;
   activities;users;search;
   public todo: any[]=[];
   progress: any[]=[];
   waiting: any[]=[];
   done: any[]=[];
-  id;role;success=false;
+  id;role;success=false;successNote=false;
+  deleteRecord= "none";
   activityList= true;
   newActivity= false;allANDs:any;
   allORs:any;
+  display="none";
+  addNote="none";
+  selectedActivity: any[]=[];
+  notes:any=[];
+  EachNote:any=[];
   dataToSend:any;status;tab;statusVal;
+  showId;
+  noteData:any;
    model: any;
   constructor(
     private router:Router,
@@ -30,6 +40,10 @@ export class ActivitiesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(localStorage.getItem('id') == "")
+    {
+      this.router.navigate(['/login']);
+    }
 
     this.activityForm = this.formBuilder.group({
       description: ['', Validators.required],
@@ -37,7 +51,10 @@ export class ActivitiesComponent implements OnInit {
       user_id:[''],
       priority:['']
     });
-
+    this.noteForm = this.formBuilder.group({
+      note: ['', Validators.required],
+      timeSpent: ['']
+    });
     this.listActivities();
     this.getUsers();
   }
@@ -53,7 +70,7 @@ export class ActivitiesComponent implements OnInit {
       this._data.addActivity(this.activityForm.value)
       .subscribe(
         data => {
-          console.log(data);
+          window.scroll(0,0);
           this.success= true;
         },
         error => {
@@ -99,8 +116,10 @@ export class ActivitiesComponent implements OnInit {
     this._data.getUsers().subscribe(
       data => {
         this.users = data['users'];
-       }
-    )
+       },
+       error => {
+          console.log(error);
+       });
    }
 
   newAddActivity()
@@ -112,6 +131,7 @@ export class ActivitiesComponent implements OnInit {
   cancel(){
     this.newActivity=false;
     this.activityList=true;
+    window.location.reload();
     
   }
  
@@ -233,23 +253,122 @@ export class ActivitiesComponent implements OnInit {
   }
 
   dropped(event) {
-    console.log("ActivitityId:"+event.value.id);
-    console.log("updated to:"+event.el.offsetParent.id);
+    //console.log("ActivitityId:"+event.value.id);
+    //console.log("updated to:"+event.el.offsetParent.id);
+    //console.log(event.el.parentElement.id);
     if(event.value.status!=event.el.offsetParent.id)
     {
-      this._data.UpdateActivityStatus(event.value.id,event.el.offsetParent.id)
+      this._data.UpdateActivityStatus(event.value.id,event.el.parentElement.id)
     .subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
         //this.success= true;
       },
       error => {
-        console.log(error);
+        //console.log(error);
         // error['error']['description'] ? this.msg=error['error']['description']  : this.status=false;
         // window.scroll(0,0);
       });
     }
    
+}
+
+onScrollUp(){
+  console.log("up");
+}
+
+onScrollDown(){
+  console.log("down");
+}
+openNotes(aId, description){
+  this.display="block";
+  this.selectedActivity['id']= aId;
+  //pusheditems[this.yesvalue] = this.selectedtruck;
+  this.selectedActivity['description']= description;
+  this.notes=[];
+  this._data.getNotes(aId)
+  .subscribe(
+    data => {
+      this.EachNote=data;
+      
+      for (let i = 0; i < this.EachNote.length ; i++)
+          { 
+            this.notes.push(this.EachNote[i]);
+          }
+         // console.log(this.notes);
+    },
+    error => {
+      console.log(error);
+      // error['error']['description'] ? this.msg=error['error']['description']  : this.status=false;
+      // window.scroll(0,0);
+    });
+
+}
+closeNotes(){
+  this.display="none";
+}
+newNote(id,description){
+  
+  this.addNote="block";
+  if(id!=undefined && description!=undefined)
+  {
+    this.selectedActivity['id']=id;
+    this.selectedActivity['description']=description;
+  }
+}
+get g() { return this.noteForm.controls; }
+closeAddNotes(){
+  this.addNote="none";
+}
+addNoteToActivity(){
+  if(this.noteForm.invalid)
+  return;
+  this._data.addNote(this.noteForm.value, this.selectedActivity['id'])
+  .subscribe(
+    data => {
+      window.scroll(0,0);
+      this.successNote= true;
+      this.noteForm.value.note="";
+      this.noteForm.value.timeSpent="";
+      this.addNote="none";
+    },
+    error => {
+      console.log(error);
+      // error['error']['description'] ? this.msg=error['error']['description']  : this.status=false;
+      // window.scroll(0,0);
+    });
+}
+showIcons(id)
+{
+ let task = document.getElementById(id);
+ task.style.display='block';
+ this.showId=id;
+}
+showDeleteDialog(id,description){
+this.deleteRecord="block";
+this.selectedActivity['id']=id;
+this.selectedActivity['description']=description;
+}
+closeDeleteDialog(){
+  this.deleteRecord="none";
+}
+deleteActivity(){
+  this._data.deleteActivity(this.selectedActivity['id'])
+  .subscribe(
+    data => {
+      console.log(data);
+    },
+    error => {
+      console.log(error);
+      // error['error']['description'] ? this.msg=error['error']['description']  : this.status=false;
+      // window.scroll(0,0);
+    });
+
+}
+hideIcons()
+{
+  document.getElementById(this.showId).style.display='none';
+ 
 }
 
   

@@ -36,63 +36,190 @@
       </td>
      <td> <button mat-fab color="primary" class=" float" *ngIf="activityList" (click)="newAddActivity()"><i class="fa fa-plus" title="Add Activity"   id="addActivity"></i> </button></td> </tr></table>
     
-      <table id="actTable"  mat-table>
-        <thead id="tabHead">
-            <tr>
-                <th mat-header-row> Todo <div class="search"><input class="cSearch" placeholder="Search"  id="todoSearch" #search (keyup)="todoSearch(search.value)" type="text"></div> </th>
-                <th mat-header-row> In Progress<div class="search"><input class="cSearch" placeholder="Search"  id="progSearch" #search1 (keyup)="progSearch(search1.value)" type="text"> </div></th>
-                <th mat-header-row> Awaiting QA<div class="search"><input class="cSearch" placeholder="Search"  id="waitSearch" #search2 (keyup)="waitSearch(search2.value)" type="text"></div></th>
-                <th mat-header-row> Done<div class="search"><input class="cSearch"  placeholder="Search"  id="doneSearch" #search3 (keyup)="doneSearch(search3.value)" type="text"></div> </th>
-              </tr>
-        </thead>
-        <tbody id="tabBody">
-          <tr>
-            <td id="ToDo" ngxDroppable="status" (drop)="dropped($event)"  class="ngx-dnd-container">
-              <div class="task ngx-dnd-item" *ngFor="let value of todo"  ngxDraggable [model]="value">        <div class="priority" title="Priority" id={{value.id}}  class ={{value.priority}}>{{value.priority}}</div>
+      <div clas="row" id="actTable"  mat-table>
+        
+            <div class="row">
+                <div class="col-md-3 tabHead" mat-header-row> Todo <div class="search"><input class="cSearch" placeholder="Search"  id="todoSearch" #search (keyup)="todoSearch(search.value)" type="text"></div> </div>
+                <div class="col-md-3 tabHead" mat-header-row> In Progress<div class="search"><input class="cSearch" placeholder="Search"  id="progSearch" #search1 (keyup)="progSearch(search1.value)" type="text"> </div></div>
+                <div class="col-md-3 tabHead" mat-header-row> Awaiting QA<div class="search"><input class="cSearch" placeholder="Search"  id="waitSearch" #search2 (keyup)="waitSearch(search2.value)" type="text"></div></div>
+                <div class="col-md-3 tabHead" mat-header-row> Done<div class="search"><input class="cSearch"  placeholder="Search"  id="doneSearch" #search3 (keyup)="doneSearch(search3.value)" type="text"></div> </div>
+            </div>
+     
+        <div class="row">
+            <div id="ToDo" ngxDroppable="status" (drop)="dropped($event)"
+            class="ngx-dnd-container col-md-3 tabBody">
+              <div class="ngx-dnd-item task" *ngFor="let value of todo" ngxDraggable="['status']" [model]="value" (mouseover)="showIcons(value.id)" (mouseout)="hideIcons()">
+                  <div class="priority" title="Priority"   class ={{value.priority}}>{{value.priority}}</div>
                   <div class="creationDate">{{ value.creationDate}} </div>
-                  <li> <i class="fa fa-comment" title="Title"></i>{{value.description}}</li>
-                  <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
-                  <div class="dueDate"> Due Date: {{value.dueDate }}</div>
+                  <div class="row">
+                  <div class="col-md-9">
+                    <li> <i class="fa fa-comment" title="Title"></i>{{value.description}}</li>
+                    <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
+                </div>
+                <div class="col-md-3 notes">
+                  <i class="material-icons" title="Notes" (click)="openNotes(value.id,value.description)">list</i>
+                </div>
               </div>
-           
-            </td>
-
-            <td id="In Progress" ngxDroppable="status"  (drop)="dropped($event)" class="ngx-dnd-container">
-                <div class="task ngx-dnd-item"  *ngFor="let value of progress" ngxDraggable [model]="value"> 
-                  <div class="priority" title="Priority" id={{value.id}}  class ={{value.priority}}>{{value.priority}}</div> 
-                  <div class="creationDate">{{ value.creationDate}}</div> 
-                  <li> <i class="fa fa-comment" title="Title"></i>  {{value.description}}</li>
-                  <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
+                 
                   <div class="dueDate"> Due Date: {{value.dueDate }}</div>
-                </div>
-              
-            </td>
+                  <div class="showOptions" id={{value.id}}>
+                      <i class="material-icons"(click)="newNote(value.id,value.description)">playlist_add</i>
+                      <i class="material-icons" (click)="showDeleteDialog(value.id,value.description)">delete_sweep</i>
+                      <i class="material-icons">create</i>
 
-            <td id="Awaiting QA"  ngxDroppable="status" (drop)="dropped($event)" class="ngx-dnd-container">
-                <div class="task ngx-dnd-item"  *ngFor="let value of waiting"  ngxDraggable [model]="value" >
-                  <div class="priority" title="Priority" id={{value.id}}  class ={{value.priority}}>{{value.priority}}</div> 
-                  <div class="creationDate">{{ value.creationDate}} </div> 
-                  <li> <i class="fa fa-comment" title="Title"></i> 
-                  {{value.description}}</li> 
-                  <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
-                  <div class="dueDate"> Due Date: {{value.dueDate }}</div>
-                </div>
-            </td>
+                  </div>
+              </div>
+            </div>
 
-            <td id="Done" ngxDroppable="status" (drop)="dropped($event)" class="ngx-dnd-container">
-                <div class="task ngx-dnd-item" *ngFor="let value of done" ngxDraggable [model]="value" >     <div class="priority" title="Priority" id={{value.id}} class ={{value.priority}}>{{value.priority}}</div> 
-                  <div class="creationDate">{{ value.creationDate}} </div> 
-                  <li> <i class="fa fa-comment" title="Title"></i> 
-                    {{value.description}}</li> 
-                  <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
-                  <div class="dueDate"> Due Date: {{value.dueDate }}</div>
+            <div id="In Progress" ngxDroppable="status" (drop)="dropped($event)" class="ngx-dnd-container col-md-3 tabBody">
+              <div class="ngx-dnd-item task"  *ngFor="let value of progress" ngxDraggable="['status']" [model]="value" (mouseover)="showIcons(value.id)" (mouseout)="hideIcons()"> 
+                <div class="priority" title="Priority"  class ={{value.priority}}>{{value.priority}}</div> 
+                <div class="creationDate">{{ value.creationDate}}</div> 
+                <div class="row">
+                    <div class="col-md-9">
+                      <li> <i class="fa fa-comment" title="Title"></i>{{value.description}}</li>
+                      <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
+                  </div>
+                  <div class="col-md-3 notes">
+                    <i class="material-icons" title="Notes" (click)="openNotes(value.id,value.description)">list</i>
+                  </div>
                 </div>
-            </td>
+                <div class="dueDate"> Due Date: {{value.dueDate }}</div>
+                <div class="showOptions" id={{value.id}}>
+                    <i class="material-icons">playlist_add</i>
+                    <i class="material-icons">delete_sweep</i>
+                    <i class="material-icons">create</i>
 
-          </tr>
-          
-        </tbody>
-      </table>
+                </div>
+              </div>
+            </div>
+
+            <div id="Awaiting QA"  ngxDroppable="status" (drop)="dropped($event)" class="ngx-dnd-container col-md-3 tabBody">
+              <div class="ngx-dnd-item task"  *ngFor="let value of waiting"  ngxDraggable="['status']" [model]="value" (mouseover)="showIcons(value.id)" (mouseout)="hideIcons()" >
+                <div class="priority" title="Priority"  class ={{value.priority}}>{{value.priority}}</div> 
+                <div class="creationDate">{{ value.creationDate}} </div> 
+                <div class="row">
+                    <div class="col-md-9">
+                      <li> <i class="fa fa-comment" title="Title"></i>{{value.description}}</li>
+                      <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
+                  </div>
+                  <div class="col-md-3 notes">
+                    <i class="material-icons" title="Notes" (click)="openNotes(value.id,value.description)">list</i>
+                  </div>
+                </div>
+                <div class="dueDate"> Due Date: {{value.dueDate }}</div>
+                <div class="showOptions" id={{value.id}}>
+                    <i class="material-icons">playlist_add</i>
+                    <i class="material-icons">delete_sweep</i>
+                    <i class="material-icons">create</i>
+
+                </div>
+                </div>
+            </div>
+
+            <div id="Done" ngxDroppable="status" (drop)="dropped($event)" class="ngx-dnd-container col-md-3 tabBody">
+              <div class="ngx-dnd-item task" *ngFor="let value of done" ngxDraggable="['status']" [model]="value" (mouseover)="showIcons(value.id)" (mouseout)="hideIcons()" >     <div class="priority" title="Priority" class ={{value.priority}}>{{value.priority}}</div> 
+                <div class="creationDate">{{ value.creationDate}} </div> 
+                <div class="row">
+                    <div class="col-md-9">
+                      <li> <i class="fa fa-comment" title="Title"></i>{{value.description}}</li>
+                      <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
+                  </div>
+                  <div class="col-md-3 notes">
+                    <i class="material-icons"  matTooltip="Notes" (click)="openNotes(value.id,value.description)">list</i>
+                  </div>
+                </div><div class="dueDate"> Due Date: {{value.dueDate }}</div>
+                <div class="showOptions" id={{value.id}}>
+                    <i class="material-icons">playlist_add</i>
+                    <i class="material-icons">delete_sweep</i>
+                    <i class="material-icons">create</i>
+
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
     </div>
-   <a [routerLink]="['/userProfile',id]" id="back"> <i class="fa fa-angle-double-left"></i> Back</a> 
+
+    <div class= "backdrop" [ngStyle]="{'display':display}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}"
+    >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{selectedActivity.description}}</h4>
+                <button type="button" class="close" (click)="closeNotes()">&times;</button>
+              </div>
+
+              <div class="row notesList">
+                <div class="col-md-4 ">Note</div>
+                <div class="col-md-4">Time Spent</div>
+                <div class="col-md-4"> Added By</div>
+              </div>
+              <div class="row notesList" *ngFor="let note of notes">
+                  <div class="col-md-4">{{note.note}}</div>
+                  <div class="col-md-4">{{note.timeSpent}}</div>
+                  <div class="col-md-4"> {{note.AddedBy}}</div>
+              </div>
+              <div class="row">
+                  <i class="material-icons addIcon" (click)="newNote()">
+                      add_circle
+                      </i>
+              </div>
+          </div>
+          </div>
+
+    </div>
+
+
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':addNote}"
+    >
+    <div class="modal-dialog">
+        <div class="modal-content addNote">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Note to {{selectedActivity.description}}</h4>
+                <button type="button" class="close" (click)="closeAddNotes()">&times;</button>
+              </div>
+              <div class="row">
+                  <form method = "post" [formGroup]="noteForm" (ngSubmit)="addNoteToActivity()" >
+                      <div>
+                        <mat-form-field appearance="outline" class="loginMargins">
+                           <mat-label>Note</mat-label><input matInput formControlName="note"  placeholder="Note"></mat-form-field>
+                       <mat-error *ngIf="g.note.touched && g.note.invalid "> Note is required</mat-error>
+                     </div>
+                     <div><mat-form-field appearance="outline" class="loginMargins"><input  matInput formControlName="timeSpent"  placeholder="Duration"></mat-form-field>
+                     </div> 
+                       <mat-error style="float:right"> {{msg}}</mat-error>
+                       <button type="submit" mat-raised-button color="primary">Add</button>
+
+                     
+                       <div *ngIf="successNote" id="success">Added Successfuly!</div>
+                        
+                     </form>
+              </div>
+          </div>
+          </div>
+
+    </div>
+
+    <div class= "backdrop" [ngStyle]="{'display':deleteRecord}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':deleteRecord}"
+    >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Are you sure to delete {{selectedActivity.description}}?</h6>
+               
+              </div>
+
+              <div class="row">
+                  <button mat-button color="warn" (click)="closeDeleteDialog()">Cancel</button>
+                  <button mat-button color="primary" (click)="deleteActivity()">Ok</button>
+              </div>
+             
+              
+          </div>
+          </div>
+
+    </div>
   </div>

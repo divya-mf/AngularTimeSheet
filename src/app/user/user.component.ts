@@ -23,6 +23,7 @@ export class UserComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get('id');
     this.storedId=localStorage.getItem('id');
+    
     if(this.id == this.storedId){
       this._data.getUserDetails(this.id).subscribe(
         data => {

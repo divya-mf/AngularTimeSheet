@@ -24,7 +24,11 @@
     "@angular/router": "^6.1.0",
     "@swimlane/dragula": "^3.7.3",
     "@swimlane/ngx-dnd": "^5.1.0",
+    "@zirafa/bootstrap-grid-only": "^1.0.0",
     "core-js": "^2.5.4",
+    "ng-material-floating-button": "^0.6.2",
+    "ngx-infinite-scroll": "^6.0.1",
+    "ngx-infinite-scroll-extended": "^0.6.3",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.26"
   },
