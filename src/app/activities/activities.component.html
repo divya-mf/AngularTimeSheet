@@ -47,13 +47,15 @@
      
         <div class="row">
             <div id="ToDo" ngxDroppable="status" (drop)="dropped($event)"
-            class="ngx-dnd-container col-md-3 tabBody">
+            class="ngx-dnd-container col-md-3 tabBody" ngxInfiniteScroller
+            strategy="scrollingToBoth"
+            (onScrollUp)="onScrollUp('todo')" (onScrollDown)="onScrollDown()">
               <div class="ngx-dnd-item task" *ngFor="let value of todo" ngxDraggable="['status']" [model]="value" (mouseover)="showIcons(value.id)" (mouseout)="hideIcons()">
                   <div class="priority" title="Priority"   class ={{value.priority}}>{{value.priority}}</div>
                   <div class="creationDate">{{ value.creationDate}} </div>
                   <div class="row">
                   <div class="col-md-9">
-                    <li> <i class="fa fa-comment" title="Title"></i>{{value.description}}</li>
+                    <li> <i class="fa fa-comment" title="Title"></i> {{value.description}}</li>
                     <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
                 </div>
                 <div class="col-md-3 notes">
@@ -63,9 +65,9 @@
                  
                   <div class="dueDate"> Due Date: {{value.dueDate }}</div>
                   <div class="showOptions" id={{value.id}}>
-                      <i class="material-icons"(click)="newNote(value.id,value.description)">playlist_add</i>
-                      <i class="material-icons" (click)="showDeleteDialog(value.id,value.description)">delete_sweep</i>
-                      <i class="material-icons">create</i>
+                      <i class="material-icons"(click)="newNote(value.id,value.description)" matTooltip="Add notes">playlist_add</i>
+                      <i class="material-icons" (click)="showDeleteDialog(value.id,value.description)" matTooltip="Delete Activity">delete_sweep</i>
+                      <i class="material-icons" (click)="editActivity(value)" matTooltip="Edit Activity">create</i>
 
                   </div>
               </div>
@@ -73,23 +75,22 @@
 
             <div id="In Progress" ngxDroppable="status" (drop)="dropped($event)" class="ngx-dnd-container col-md-3 tabBody">
               <div class="ngx-dnd-item task"  *ngFor="let value of progress" ngxDraggable="['status']" [model]="value" (mouseover)="showIcons(value.id)" (mouseout)="hideIcons()"> 
-                <div class="priority" title="Priority"  class ={{value.priority}}>{{value.priority}}</div> 
+                <div class="priority"  matTooltip="Notes" class ={{value.priority}}>{{value.priority}}</div> 
                 <div class="creationDate">{{ value.creationDate}}</div> 
                 <div class="row">
                     <div class="col-md-9">
-                      <li> <i class="fa fa-comment" title="Title"></i>{{value.description}}</li>
+                      <li> <i class="fa fa-comment" title="Title"></i> {{value.description}}</li>
                       <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
                   </div>
                   <div class="col-md-3 notes">
-                    <i class="material-icons" title="Notes" (click)="openNotes(value.id,value.description)">list</i>
+                    <i class="material-icons"  matTooltip="Notes" (click)="openNotes(value.id,value.description)">list</i>
                   </div>
                 </div>
                 <div class="dueDate"> Due Date: {{value.dueDate }}</div>
                 <div class="showOptions" id={{value.id}}>
-                    <i class="material-icons">playlist_add</i>
-                    <i class="material-icons">delete_sweep</i>
-                    <i class="material-icons">create</i>
-
+                    <i class="material-icons"(click)="newNote(value.id,value.description)" matTooltip="Add notes">playlist_add</i>
+                      <i class="material-icons" (click)="showDeleteDialog(value.id,value.description)" matTooltip="Delete Activity">delete_sweep</i>
+                      <i class="material-icons" (click)="editActivity(value)" matTooltip="Edit Activity">create</i>
                 </div>
               </div>
             </div>
@@ -100,19 +101,18 @@
                 <div class="creationDate">{{ value.creationDate}} </div> 
                 <div class="row">
                     <div class="col-md-9">
-                      <li> <i class="fa fa-comment" title="Title"></i>{{value.description}}</li>
+                      <li> <i class="fa fa-comment" title="Title"></i> {{value.description}}</li>
                       <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
                   </div>
                   <div class="col-md-3 notes">
-                    <i class="material-icons" title="Notes" (click)="openNotes(value.id,value.description)">list</i>
+                    <i class="material-icons"  matTooltip="Notes" (click)="openNotes(value.id,value.description)">list</i>
                   </div>
                 </div>
                 <div class="dueDate"> Due Date: {{value.dueDate }}</div>
                 <div class="showOptions" id={{value.id}}>
-                    <i class="material-icons">playlist_add</i>
-                    <i class="material-icons">delete_sweep</i>
-                    <i class="material-icons">create</i>
-
+                    <i class="material-icons"(click)="newNote(value.id,value.description)" matTooltip="Add notes">playlist_add</i>
+                    <i class="material-icons" (click)="showDeleteDialog(value.id,value.description)" matTooltip="Delete Activity">delete_sweep</i>
+                    <i class="material-icons" (click)="editActivity(value)" matTooltip="Edit Activity" >create</i>
                 </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                 <div class="creationDate">{{ value.creationDate}} </div> 
                 <div class="row">
                     <div class="col-md-9">
-                      <li> <i class="fa fa-comment" title="Title"></i>{{value.description}}</li>
+                      <li> <i class="fa fa-comment" title="Title"></i> {{value.description}}</li>
                       <li> <i class="fa fa-user" title="Assigned to" aria-hidden="true"></i> {{value.user_id}}</li>
                   </div>
                   <div class="col-md-3 notes">
@@ -130,10 +130,9 @@
                   </div>
                 </div><div class="dueDate"> Due Date: {{value.dueDate }}</div>
                 <div class="showOptions" id={{value.id}}>
-                    <i class="material-icons">playlist_add</i>
-                    <i class="material-icons">delete_sweep</i>
-                    <i class="material-icons">create</i>
-
+                    <i class="material-icons"(click)="newNote(value.id,value.description)" matTooltip="Add notes">playlist_add</i>
+                      <i class="material-icons" (click)="showDeleteDialog(value.id,value.description)" matTooltip="Delete Activity">delete_sweep</i>
+                      <i class="material-icons" (click)="editActivity(value)" matTooltip="Edit Activity">create</i>
                 </div>
               </div>
             </div>
@@ -172,54 +171,100 @@
     </div>
 
 
-    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':addNote}"
-    >
-    <div class="modal-dialog">
-        <div class="modal-content addNote">
-            <div class="modal-header">
-                <h4 class="modal-title">Add Note to {{selectedActivity.description}}</h4>
-                <button type="button" class="close" (click)="closeAddNotes()">&times;</button>
-              </div>
-              <div class="row">
-                  <form method = "post" [formGroup]="noteForm" (ngSubmit)="addNoteToActivity()" >
-                      <div>
-                        <mat-form-field appearance="outline" class="loginMargins">
-                           <mat-label>Note</mat-label><input matInput formControlName="note"  placeholder="Note"></mat-form-field>
-                       <mat-error *ngIf="g.note.touched && g.note.invalid "> Note is required</mat-error>
-                     </div>
-                     <div><mat-form-field appearance="outline" class="loginMargins"><input  matInput formControlName="timeSpent"  placeholder="Duration"></mat-form-field>
-                     </div> 
-                       <mat-error style="float:right"> {{msg}}</mat-error>
-                       <button type="submit" mat-raised-button color="primary">Add</button>
-
-                     
-                       <div *ngIf="successNote" id="success">Added Successfuly!</div>
-                        
-                     </form>
-              </div>
-          </div>
-          </div>
-
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':addNote}">
+        <div class="modal-dialog">
+            <div class="modal-content addNote">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Note to {{selectedActivity.description}}</h4>
+                    <button type="button" class="close" (click)="callConfirm()">&times;</button>
+                </div>
+                <div class="row">
+                    <form method = "post" [formGroup]="noteForm" (ngSubmit)="addNoteToActivity()" >
+                        <div>
+                            <mat-form-field appearance="outline" class="loginMargins">
+                            <mat-label>Note</mat-label><input matInput formControlName="note"  placeholder="Note"></mat-form-field>
+                            <mat-error *ngIf="g.note.touched && g.note.invalid "> Note is required</mat-error>
+                        </div>
+                        <div>
+                            <mat-form-field appearance="outline" class="loginMargins"><input  matInput formControlName="timeSpent"  placeholder="Duration"></mat-form-field>
+                        </div> 
+                        <mat-error style="float:right"> {{msg}}</mat-error>
+                        <button type="submit" mat-raised-button color="primary">Add</button>
+                        <div *ngIf="successNote" id="success">Added Successfuly!</div>    
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class= "backdrop" [ngStyle]="{'display':deleteRecord}"></div>
-    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':deleteRecord}"
-    >
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h6 class="modal-title">Are you sure to delete {{selectedActivity.description}}?</h6>
-               
-              </div>
-
-              <div class="row">
-                  <button mat-button color="warn" (click)="closeDeleteDialog()">Cancel</button>
-                  <button mat-button color="primary" (click)="deleteActivity()">Ok</button>
-              </div>
-             
-              
-          </div>
-          </div>
-
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':deleteRecord}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title">Are you sure to delete {{selectedActivity.description}}?</h6>
+                </div>
+                <div class="row">
+                        <div class="matButton">  <button mat-raised-button color="warn" class="matButton" (click)="closeDeleteDialog()">Cancel</button></div>
+                        <div class="matButton">  <button mat-raised-button color="primary" class="matButton" (click)="deleteActivity()">Ok</button> </div>
+                   
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class= "backdrop" [ngStyle]="{'display':isEditActivity}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':isEditActivity}">
+            <div class="modal-dialog">
+                <div class="modal-content ">
+                    
+                    <div class="row">
+                        <form method="post" [formGroup]="editForm" >
+                                <h3>Edit Activity</h3> 
+                                <label>Description:</label>
+                                <textarea matInput rows="3" class="border" cols="10" id="description" formControlName="description"></textarea>
+                                <mat-error class="errors" *ngIf="edit.description.invalid"> Description is required</mat-error>
+                                <label>Assign to:</label>
+                                <select  formControlName="user_id" [ngStyle]="{'display':isEditActivity}" [value]="selectedActivity.user_id">
+                                    <option *ngFor="let user of users"  >
+                                        {{user.first_name}} {{user.last_name}}</option>
+                                 </select>
+                                <label>Priority:</label>
+                                <select  formControlName="priority" [ngStyle]="{'display':isEditActivity}" [value]='selectedActivity.priority'>
+                                <option value="HIGH"> HIGH </option>
+                                <option  value="MEDIUM"> MEDIUM </option>
+                                <option  value="LOW"> LOW </option> </select>
+                               
+                                <label>Due Date:</label>
+                                <input matInput type="date"class="border" formControlName="date" [value]="selectedActivity.dueDate| date:'yyyy-MM-dd'">
+                               
+                                <div class="row">
+                                        
+                                        <div class="matButton">    <button mat-raised-button color="warn" class="matButton" (click)="callConfirm()">Cancel</button>
+                                        </div>
+                                        <div class="matButton"> <button type="submit" mat-raised-button class="matButton" (click)="updateActivity()" color="primary">Update</button> 
+                                            </div>
+                                        </div>           
+                        </form>  
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class= "backdrop" [ngStyle]="{'display':isCloseEdit}"></div>
+        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':isCloseEdit}">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title">All your unsaved changes will be reverted.Are you sure to quit? </h6>
+                    </div>
+                    <div class="row">
+                            <div class="matButton"> <button mat-raised-button color="warn" (click)="closeConfirm()">No</button> </div>
+                            <div class="matButton"> <button mat-raised-button color="primary"  (click)="closeEdit()">Yes</button></div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
   </div>

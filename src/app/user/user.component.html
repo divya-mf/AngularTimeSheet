@@ -24,24 +24,53 @@
         <li>Email ID: {{userDetails?.email}}</li>
         
     </ul>
-    <button class="btn" title='Edit' click="edit()"><i class='fa fa-edit'></i> </button>
-</div>
-<div *ngIf="editDetails">
-    <h2>WELCOME {{userDetails?.first_name}} </h2>
-    <h3>Edit Your Details:</h3>
-        <ul>
-            <li>First Name:<input type="text" id="frst1" name="fname"></li>
-            <li>Last Name:<input type="text" id="lst1" name="lname"></li>
-            <li>Email ID:<input type="text" id="em1" name="email"></li>
-        </ul>
-        <input type="hidden" name="save" id="save" value="save">
-        <button name="submit" class="btn" id="update" title='save' onclick="userModule.save()" ><i class='fa fa-save'></i> </button>
+    <i class="material-icons maticon" matTooltip="Edit" (click)="editUserDetails()">create</i>
+    
 </div>
 
-<div id="userDetails">
-    <button id="close" title='close' onclick="userModule.closeModal()"><i class='fa fa-close'></i></button>   
-    <h3>User Details:</h3>
-        <div id="all">
+<div class= "backdrop" [ngStyle]="{'display':isEditUser}"></div>
+    <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':isEditUser}">
+            <div class="modal-dialog">
+                <div class="modal-content ">
+                    
+                    <div class="row">
+                        <form method="post" [formGroup]="editUser" >
+                                <h3>Edit Your Details</h3> 
+                                <label>First Name:</label>
+                                <input matInput  class="border" formControlName="fname">
+                                <mat-error class="errors" *ngIf="edit.fname.invalid"> First Name is required</mat-error>
+                                <label>Last Name:</label>
+                                <input matInput class="border" formControlName="lname">
+                                <mat-error class="errors" *ngIf="edit.lname.invalid"> Last Name is required</mat-error>
+                                <label>Email id:</label>
+                                <input matInput class="border"  formControlName="email">
+                                <mat-error class="errors" *ngIf="edit.email.invalid"> Email is required</mat-error>
+                               
+                               
+                                <div class="row">
+                                        
+                                        <div class="matButton">    <button mat-raised-button color="warn" class="matButton" (click)="callConfirm()">Cancel</button>
+                                        </div>
+                                        <div class="matButton"> <button type="submit" mat-raised-button class="matButton" (click)="updateUser()" color="primary">Update</button> 
+                                            </div>
+                                        </div>           
+                        </form>  
+                    </div>
+                </div>
+            </div>
         </div>
-         <button id="del" title='delete user' onclick="userModule.deleteUser()"><i class='fa fa-trash'></i> </button>  
-</div>
+
+        <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':isCloseEdit}">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title">All your unsaved changes will be reverted.Are you sure to quit? </h6>
+                        </div>
+                        <div class="row">
+                                <div class="matButton"> <button mat-raised-button color="warn" (click)="closeConfirm()">No</button> </div>
+                                <div class="matButton"> <button mat-raised-button color="primary"  (click)="closeEdit()">Yes</button></div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>

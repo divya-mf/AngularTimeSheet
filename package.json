@@ -29,6 +29,7 @@
     "ng-material-floating-button": "^0.6.2",
     "ngx-infinite-scroll": "^6.0.1",
     "ngx-infinite-scroll-extended": "^0.6.3",
+    "ngx-infinite-scroller": "^0.3.5",
     "rxjs": "^6.0.0",
     "zone.js": "~0.8.26"
   },

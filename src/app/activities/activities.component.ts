@@ -13,14 +13,17 @@ import { DOCUMENT } from '@angular/common';
 export class ActivitiesComponent implements OnInit {
   activityForm: FormGroup;
   noteForm: FormGroup;
+  editForm:FormGroup;
   activities;users;search;
-  public todo: any[]=[];
+  todo: any[]=[];
   progress: any[]=[];
   waiting: any[]=[];
   done: any[]=[];
   id;role;success=false;successNote=false;
   deleteRecord= "none";
   activityList= true;
+  isEditActivity="none";
+  isCloseEdit="none";
   newActivity= false;allANDs:any;
   allORs:any;
   display="none";
@@ -55,6 +58,12 @@ export class ActivitiesComponent implements OnInit {
       note: ['', Validators.required],
       timeSpent: ['']
     });
+    this.editForm = this.formBuilder.group({
+      description: ['', Validators.required],
+      date: [''],
+      user_id:[''],
+      priority:[''],
+    });
     this.listActivities();
     this.getUsers();
   }
@@ -62,7 +71,9 @@ export class ActivitiesComponent implements OnInit {
   get f() {
     return this.activityForm.controls;
     }
-
+  get edit() {
+      return this.editForm.controls;
+  }
     addActivity() {
       if(this.activityForm.invalid)
       return;
@@ -74,14 +85,17 @@ export class ActivitiesComponent implements OnInit {
           this.success= true;
         },
         error => {
-          console.log(error);
-          // error['error']['description'] ? this.msg=error['error']['description']  : this.status=false;
-          // window.scroll(0,0);
+          //console.log(error);
+          this.router.navigate(['/login']);
         });
    }
 
    listActivities()
    {
+    this.todo=[];
+    this.progress=[];
+    this.waiting=[];
+    this.done=[];
     this.id=localStorage.getItem('id');
     this.role=localStorage.getItem('role');
     this.dataToSend={
@@ -109,7 +123,7 @@ export class ActivitiesComponent implements OnInit {
         }
       },
       error => {
-         console.log(error);
+        this.router.navigate(['/login']);
       });
    }
    getUsers(){
@@ -118,7 +132,7 @@ export class ActivitiesComponent implements OnInit {
         this.users = data['users'];
        },
        error => {
-          console.log(error);
+          //console.log(error);
        });
    }
 
@@ -185,7 +199,7 @@ export class ActivitiesComponent implements OnInit {
     };
     this.allORs= { 
       "description" : value,
-      "userName1":value
+      "userName1" : value
     };
     this.dataToSend={
       "allORs":this.allORs,
@@ -202,10 +216,8 @@ export class ActivitiesComponent implements OnInit {
           this.listActivities();
         }
         else{
-          for (let i = 0; i < this.activities.length ; i++)
-          { 
-            if(tab === 0)
-            {
+          for (let i = 0; i < this.activities.length ; i++){ 
+            if(tab === 0){
               if(this.activities[i]['status']== 'ToDo'){
                 this.todo.push(this.activities[i]);
               }
@@ -219,12 +231,11 @@ export class ActivitiesComponent implements OnInit {
                 this.done.push(this.activities[i]);
               }
             }
-            else
-            {
+            else{
               tab.push(this.activities[i]);
             }
           }
-      }
+        }
       },
       error => {
          console.log(error);
@@ -261,11 +272,11 @@ export class ActivitiesComponent implements OnInit {
       this._data.UpdateActivityStatus(event.value.id,event.el.parentElement.id)
     .subscribe(
       data => {
-        //console.log(data);
+        console.log(data);
         //this.success= true;
       },
       error => {
-        //console.log(error);
+        console.log(error);
         // error['error']['description'] ? this.msg=error['error']['description']  : this.status=false;
         // window.scroll(0,0);
       });
@@ -273,13 +284,6 @@ export class ActivitiesComponent implements OnInit {
    
 }
 
-onScrollUp(){
-  console.log("up");
-}
-
-onScrollDown(){
-  console.log("down");
-}
 openNotes(aId, description){
   this.display="block";
   this.selectedActivity['id']= aId;
@@ -370,6 +374,60 @@ hideIcons()
   document.getElementById(this.showId).style.display='none';
  
 }
+editActivity(value){
+this.isEditActivity="block";
+  this.selectedActivity=value;
+ 
+  this.editForm.controls['description'].setValue(this.selectedActivity['description']);
+  this.editForm.controls['user_id'].setValue(this.selectedActivity['user_id']);
+  //this.editForm.controls['priority'].setValue(this.selectedActivity['priotity']);
+  
+  //this.editForm.controls['date'].setValue(this.selectedActivity['dueDate']);
+  console.log(value);
+ 
+}
+callConfirm(){
+  this.isCloseEdit="block";
+}
+closeEdit(){
+  this.isEditActivity="none";
+  this.isCloseEdit="none";
+  this.addNote="none";
+}
+closeConfirm(){
+  this.isCloseEdit="none";
+  
+}
+updateActivity(){
+  if(this.editForm.invalid)
+    return;
+    this._data.updateActivity(this.editForm.value, this.selectedActivity['id'])
+    .subscribe(
+      data => {
+        console.log(data);
+        this.isEditActivity="none";
+        //this.listActivities();
+        //window.scroll(0,0);
+        //this.successNote= true;
+        
+      },
+      error => {
+        console.log(error);
+        // error['error']['description'] ? this.msg=error['error']['description']  : this.status=false;
+        // window.scroll(0,0);
+      });
+ 
+}
+
+onScrollUp($event){
+  console.log("scrolledUp");
+  console.log($event);
+}
+
+onScrollDown(){
+  console.log("scrolledDown");
+}
+
 
   
  

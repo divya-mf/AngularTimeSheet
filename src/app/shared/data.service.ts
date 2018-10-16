@@ -53,6 +53,14 @@ export class DataService {
       })
    );
   }
+  updateUser(userData:any, id:number) {
+    return this.http.post(this.apiUrl+'/updateUser', { userData: userData, id: id })
+    .pipe( 
+      catchError( error => {
+        return throwError( error )
+      })
+   );
+  }
 
   getActivities(dataToSend:any){
     return this.http.post(this.apiUrl+'/activities',{ dataToSend:dataToSend })
@@ -93,6 +101,14 @@ export class DataService {
 
   UpdateActivityStatus(id:number, status:string) {
     return this.http.post(this.apiUrl+'/updateStatus', { id: id, status: status })
+    .pipe( 
+      catchError( error => {
+        return throwError( error )
+      })
+   );
+  }
+  updateActivity(activityData:any, id:number) {
+    return this.http.post(this.apiUrl+'/updateActivity', { activityData: activityData, id: id })
     .pipe( 
       catchError( error => {
         return throwError( error )

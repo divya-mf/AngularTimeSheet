@@ -280,7 +280,7 @@ color: #666666;
     padding: 25px;
     width: 500px;
     margin: 100px 400px 200px 400px;
-    font-family: cursive;
+    font-family: sans-serif;
     font-size: 18px;
 
 }
@@ -422,13 +422,15 @@ color: #666666;
 	background:white;
     margin: 5px;
     border-radius: 5px;
+    height:135px;
 }
 #tabBody td{
         padding: 10px;
         width: 300px;
 }
 .task li{
-	list-style-type: none;
+    list-style-type: none;
+    padding: 2px;
 }
 #tabHead th {
 	padding:10px;
@@ -469,7 +471,6 @@ color: #666666;
 .dueDate{
 	font-size: 13px;
     font-family: monospace;
-    float: right;
     color: firebrick;
 }
 .HIGH{
@@ -537,7 +538,7 @@ color: #666666;
 }
 
 .notes{
-    margin-top: 11px;
+    margin-top: 24px;
     cursor: pointer;
 }
 .backdrop{
@@ -577,6 +578,36 @@ color: #666666;
 }
 .showOptions{
     display: none;
+    cursor: pointer;
+    float: right;
+}
+.material-icons{
+    padding-right: 10px;
+}
+
+
+#options {
+    //position: absolute;
+    left: -80px;
+    transition: 0.3s;
+    padding: 15px;
+    width: 100px;
+    //text-decoration: none;
+    //font-size: 20px;
+    color: black;
+    border-radius: 0 5px 5px 0;
+}
+.matButton{
+    margin: 11px 30px 0px 20px;
+}
+#options:hover {
+    left: 0;
+}
+.border{
+    border: 1px solid #f2f2f2;
+}
+.maticon{
+    margin-left: 410px;
     cursor: pointer;
 }
 html, body { height: 100%; }

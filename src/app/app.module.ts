@@ -11,9 +11,9 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { DataService } from './shared/data.service';
 import {TokenInterceptorService} from './shared/token-interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgxInfiniteScrollerModule } from 'ngx-infinite-scroller';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule, MatToolbarModule,MatCardModule } from '@angular/material';
+import { MatButtonModule, MatToolbarModule,MatCardModule,MatTooltipModule } from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import { UserComponent } from './user/user.component';
 import { ActivitiesComponent } from './activities/activities.component';
@@ -43,7 +43,8 @@ import { NgxDnDModule } from '@swimlane/ngx-dnd';
     MatToolbarModule,
     MatCardModule,
     NgxDnDModule,
-    InfiniteScrollModule
+    NgxInfiniteScrollerModule,
+    MatTooltipModule
   ],
   providers: [DataService,{
     provide:HTTP_INTERCEPTORS,
