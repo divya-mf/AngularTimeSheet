@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {  FormGroup,ReactiveFormsModule,FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../shared/data.service';
 import { Router } from '@angular/router';
@@ -11,10 +11,20 @@ import { DOCUMENT } from '@angular/common';
   styleUrls: ['./activities.component.scss']
 })
 export class ActivitiesComponent implements OnInit {
-  activityForm: FormGroup;
+  
+  @ViewChild('activityForm') public activityForm: FormGroup;
   noteForm: FormGroup;
   editForm:FormGroup;
   activities;users;search;
+  tCount;pCount;wCount;dCount;
+  tSkip:number=0;
+  tMax:number=3;
+  pSkip:number=0;
+  pMax:number=3;
+  wSkip:number=0;
+  wMax:number=3;
+  dSkip:number=0;
+  dMax:number=3;
   todo: any[]=[];
   progress: any[]=[];
   waiting: any[]=[];
@@ -64,7 +74,10 @@ export class ActivitiesComponent implements OnInit {
       user_id:[''],
       priority:[''],
     });
-    this.listActivities();
+    this.listActivities("ToDo","3","0");
+    this.listActivities("In Progress","3","0");
+    this.listActivities("Awaiting QA","3","0");
+    this.listActivities("Done","3","0");
     this.getUsers();
   }
 
@@ -90,39 +103,48 @@ export class ActivitiesComponent implements OnInit {
         });
    }
 
-   listActivities()
+   listActivities(status, max, skip)
    {
-    this.todo=[];
-    this.progress=[];
-    this.waiting=[];
-    this.done=[];
+    // this.todo=[];
+    // this.progress=[];
+    // this.waiting=[];
+    // this.done=[];
     this.id=localStorage.getItem('id');
     this.role=localStorage.getItem('role');
     this.dataToSend={
       "id":this.id,
-      "role":this.role
+      "role":this.role,
+      "status": status,
+      "max":max,
+      "skip":skip
     }
+    
     this._data.getActivities(this.dataToSend).subscribe(
       data => { 
-        this.activities=data;
+        data['activities'] ? this.activities=data['activities']:this.activities=data;
         for (let i = 0; i < this.activities.length ; i++)
         {
           if(this.activities[i]['status']== 'ToDo'){
             this.todo.push(this.activities[i]);
+            this.tCount=data['found'];
           }
           if(this.activities[i]['status']== 'In Progress'){
             this.progress.push(this.activities[i]);
+            this.pCount=data['found'];
           }
           if(this.activities[i]['status']== 'Awaiting QA'){
             this.waiting.push(this.activities[i]);
+            this.wCount=data['found'];
           }
           if(this.activities[i]['status']== 'Done'){
             this.done.push(this.activities[i]);
+            this.dCount=data['found'];
           }
          // this.status=this.assignStatus(this.activities[i]['status']);
         }
       },
       error => {
+        console.log(error);
         this.router.navigate(['/login']);
       });
    }
@@ -213,7 +235,7 @@ export class ActivitiesComponent implements OnInit {
         this.activities=data;
         if(this.activities == 0)
         {
-          this.listActivities();
+          this.listActivities("","","");
         }
         else{
           for (let i = 0; i < this.activities.length ; i++){ 
@@ -272,7 +294,7 @@ export class ActivitiesComponent implements OnInit {
       this._data.UpdateActivityStatus(event.value.id,event.el.parentElement.id)
     .subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
         //this.success= true;
       },
       error => {
@@ -360,7 +382,7 @@ deleteActivity(){
   this._data.deleteActivity(this.selectedActivity['id'])
   .subscribe(
     data => {
-      console.log(data);
+      //console.log(data);
     },
     error => {
       console.log(error);
@@ -383,7 +405,7 @@ this.isEditActivity="block";
   //this.editForm.controls['priority'].setValue(this.selectedActivity['priotity']);
   
   //this.editForm.controls['date'].setValue(this.selectedActivity['dueDate']);
-  console.log(value);
+  //console.log(value);
  
 }
 callConfirm(){
@@ -404,7 +426,7 @@ updateActivity(){
     this._data.updateActivity(this.editForm.value, this.selectedActivity['id'])
     .subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
         this.isEditActivity="none";
         //this.listActivities();
         //window.scroll(0,0);
@@ -419,14 +441,55 @@ updateActivity(){
  
 }
 
-onScrollUp($event){
-  console.log("scrolledUp");
-  console.log($event);
+
+onScrollDown(status){
+  //console.log("scrolledDown");
+  let skip, max, found;
+  if(status == "ToDo")
+  {
+    //this.todo =[];
+    this.tSkip=this.tSkip + this.tMax;
+    this.tMax= this.tMax + 3;
+    skip=this.tSkip;
+    max=this.tMax;
+    found= this.tCount;
+  }
+  if(status == "In Progress")
+  {
+    //this.progress=[];
+    this.pSkip=this.pSkip + this.pMax;
+    this.pMax= this.pMax + 3;
+    skip=this.pSkip
+    max= this.pMax;
+    found=this.pCount;
+  }
+  if(status == "Awaiting QA")
+  {
+    //this.waiting=[];
+    this.wSkip=this.wSkip + this.wMax;
+    this.wMax= this.wMax + 3;
+    skip=this.wSkip
+    max= this.wMax;
+    found= this.wCount;
+  }
+  if(status == "Done")
+  {
+    //this.done=[];
+    this.dSkip=this.dSkip + this.dMax;
+    this.dMax= this.dMax + 3;
+    skip=this.dSkip;
+    max=  this.dMax
+    found= this.dCount;
+  }
+ if(found>skip)
+ { 
+   max=found-skip;
+   this.listActivities(status,max,skip);
+  }
+ 
 }
 
-onScrollDown(){
-  console.log("scrolledDown");
-}
+
 
 
   

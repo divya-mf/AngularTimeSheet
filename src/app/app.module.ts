@@ -19,6 +19,7 @@ import { UserComponent } from './user/user.component';
 import { ActivitiesComponent } from './activities/activities.component';
 import { HeaderComponent } from './header/header.component';
 import { NgxDnDModule } from '@swimlane/ngx-dnd';
+import { ActivitiesCanDeactivateGuardService } from './activities/activities-can-deactivate.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,7 @@ import { NgxDnDModule } from '@swimlane/ngx-dnd';
     provide:HTTP_INTERCEPTORS,
     useClass:TokenInterceptorService,
     multi:true
-  }],
+  }, ActivitiesCanDeactivateGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

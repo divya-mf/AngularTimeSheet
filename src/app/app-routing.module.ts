@@ -5,6 +5,7 @@ import {LoginComponent} from './login/login.component';
 import {ContainerComponent} from './container/container.component';
 import {UserComponent} from './user/user.component';
 import {ActivitiesComponent} from './activities/activities.component';
+import { ActivitiesCanDeactivateGuardService } from './activities/activities-can-deactivate.service';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
   },
   {
     path: 'activities',
-    component:ActivitiesComponent
+    component:ActivitiesComponent,
+    canDeactivate: [ActivitiesCanDeactivateGuardService]
   }
 ];
 
