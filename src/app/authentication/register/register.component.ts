@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {  FormGroup,ReactiveFormsModule,FormBuilder, Validators } from '@angular/forms';
-import { DataService } from '../shared/data.service';
+import { DataService } from './../../shared/data.service';
 import { Router } from '@angular/router';
 import { Validator,AbstractControl, ValidationErrors, NG_VALIDATORS, ValidatorFn } from '@angular/forms';
 import { Subscription } from 'rxjs';

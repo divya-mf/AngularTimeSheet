@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {  FormGroup,ReactiveFormsModule,FormBuilder, Validators } from '@angular/forms';
-import { DataService } from '../shared/data.service';
+import { DataService } from './../../shared/data.service';
 import { Router } from '@angular/router';
 import { Validator,AbstractControl, ValidationErrors, NG_VALIDATORS, ValidatorFn } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -427,6 +427,9 @@ closeEdit(){
   this.addNote="none";
   this.newActivity=false;
   this.activityList=true;
+  this.noteForm.reset();
+  this.activityForm.reset();
+  this.editForm.reset();
 }
 closeConfirm(){
   this.isCloseEdit="none";

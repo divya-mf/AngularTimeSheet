@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../shared/data.service';
+import { DataService } from './../../shared/data.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import {  FormGroup,ReactiveFormsModule,FormBuilder, Validators } from '@angular/forms';
