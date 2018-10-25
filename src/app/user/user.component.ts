@@ -11,11 +11,11 @@ import {  FormGroup,ReactiveFormsModule,FormBuilder, Validators } from '@angular
 })
 export class UserComponent implements OnInit {
 
- userDetails:object; //object to store user details.
- id;
- storedId;
- isEditUser="none";
- isCloseEdit="none";
+ userDetails:any; //object to store user details.
+ id:any;
+ storedId:any;
+ isEditUser:string="none";
+ isCloseEdit:string="none";
  editUser:FormGroup;
  
   constructor(
@@ -26,7 +26,6 @@ export class UserComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-
     this.id = this.route.snapshot.paramMap.get('id');
     this.storedId=localStorage.getItem('id');
     
@@ -40,8 +39,7 @@ export class UserComponent implements OnInit {
           this.router.navigate(['/login']);
          }
       )
-    }
-    else
+    }else
     {
       this.router.navigate(['/login']);
     }
@@ -67,11 +65,7 @@ updateUser(){
     this._data.updateUser(this.editUser.value, this.userDetails['id'])
     .subscribe(
       data => {
-        console.log(data);
-        this.isEditUser="none";
-        //this.listActivities();
-        //window.scroll(0,0);
-        //this.successNote= true;
+        this.isEditUser="none"
         
       },
       error => {

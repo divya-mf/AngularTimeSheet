@@ -18,7 +18,10 @@ export class ActivitiesComponent implements OnInit {
   activities:any;
   users:any;
   search:string;
-  tCount;pCount;wCount;dCount;
+  tCount:number;
+  pCount:number;
+  wCount:number;
+  dCount:number;
   tSkip:number=0;
   tMax:number=3;
   pSkip:number=0;

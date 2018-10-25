@@ -12,9 +12,9 @@ import { Subscription } from 'rxjs';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  hide = true;
+  hide:boolean = true;
   status: boolean=true;
-  msg; 
+  msg:string; 
   constructor(
     private router: Router,
     private _data: DataService,

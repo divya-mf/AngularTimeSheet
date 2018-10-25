@@ -11,10 +11,10 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  hide = true;
-  msg; 
+  hide:boolean = true;
+  msg:string; 
   status: boolean=true;
-  isLoggedIn = false;
+  isLoggedIn:boolean = false;
   constructor( 
     private _data: DataService,
     private formBuilder: FormBuilder,
@@ -40,16 +40,14 @@ export class LoginComponent implements OnInit {
     this._data.login(this.f.email.value, this.f.password.value)
         .subscribe(
             data => {
-              //console.log(data);
               this.msg=data['description'];
               localStorage.setItem('id', data['id']);
               localStorage.setItem('token', data['token']);
-                 
+              window.location.reload();
               this.router.navigate(['/userProfile',data['id']]);
                
             },
             error => {
-             // console.log(error);
               error['error']['description'] ? this.msg=error['error']['description']  : this.status=false;
             });
 }

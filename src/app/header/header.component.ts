@@ -7,14 +7,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  loggedIn = true;
-  data;
+  loggedIn:boolean = false;
+  data:any;
   constructor(
     private router: Router
   ) { }
 
   ngOnInit() {
     this.data = localStorage.getItem('id');
+    if(this.data){
+      this.loggedIn=true;
+    }
   }
   logout(){
     localStorage.setItem('id','');
