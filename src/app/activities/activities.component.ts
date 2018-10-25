@@ -15,7 +15,9 @@ export class ActivitiesComponent implements OnInit {
   @ViewChild('activityForm') public activityForm: FormGroup;
   noteForm: FormGroup;
   editForm:FormGroup;
-  activities;users;search;
+  activities:any;
+  users:any;
+  search:string;
   tCount;pCount;wCount;dCount;
   tSkip:number=0;
   tMax:number=3;
@@ -29,22 +31,29 @@ export class ActivitiesComponent implements OnInit {
   progress: any[]=[];
   waiting: any[]=[];
   done: any[]=[];
-  id;role;success=false;successNote=false;
-  deleteRecord= "none";
-  activityList= true;
-  isEditActivity="none";
-  isCloseEdit="none";
-  newActivity= false;allANDs:any;
+  id:any;
+  role:any;
+  success: boolean=false;
+  successNote: boolean=false;
+  deleteRecord:string= "none";
+  activityList: boolean= true;
+  isEditActivity:string="none";
+  isCloseEdit:string="none";
+  newActivity: boolean= false;
+  allANDs:any;
   allORs:any;
-  display="none";
-  addNote="none";
+  display:string="none";
+  addNote:string="none";
   selectedActivity: any[]=[];
   notes:any=[];
   EachNote:any=[];
-  dataToSend:any;status;tab;statusVal;
-  showId;
+  dataToSend:any;
+  status:any;
+  tab:any;
+  statusVal:any;
+  showId:any;
   noteData:any;
-   model: any;
+  model: any;
   constructor(
     private router:Router,
     private _data:DataService,
@@ -162,13 +171,6 @@ export class ActivitiesComponent implements OnInit {
   {
     this.activityList=false;
     this.newActivity=true;
-  }
-
-  cancel(){
-    this.newActivity=false;
-    this.activityList=true;
-    window.location.reload();
-    
   }
  
   todoSearch(value: string)
@@ -409,12 +411,19 @@ this.isEditActivity="block";
  
 }
 callConfirm(){
-  this.isCloseEdit="block";
+  if(this.activityForm.dirty || this.noteForm.dirty || this.editForm.dirty)
+  {
+    this.isCloseEdit="block";
+  }
+  else
+  this.closeEdit();
 }
 closeEdit(){
   this.isEditActivity="none";
   this.isCloseEdit="none";
   this.addNote="none";
+  this.newActivity=false;
+  this.activityList=true;
 }
 closeConfirm(){
   this.isCloseEdit="none";

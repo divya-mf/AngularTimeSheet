@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { User } from './../user';
-import { Activity } from './../activity';
-import { NoteData } from './../note';
+import { User } from '../models/user';
+import { Activity } from '../models/activity';
+import { NoteData } from '../models/note';
 import { environment } from './../../environments/environment'
 import { Observable, of, throwError} from "rxjs"
 import { map, filter, catchError, mergeMap } from 'rxjs/operators';
@@ -53,6 +53,7 @@ export class DataService {
       })
    );
   }
+  
   updateUser(userData:any, id:number) {
     return this.http.post(this.apiUrl+'/updateUser', { userData: userData, id: id })
     .pipe( 

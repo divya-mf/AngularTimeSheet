@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
-import { ContainerComponent } from './container/container.component';
 import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { DataService } from './shared/data.service';
@@ -26,7 +25,6 @@ import { ActivitiesCanDeactivateGuardService } from './activities/activities-can
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    ContainerComponent,
     UserComponent,
     ActivitiesComponent,
     HeaderComponent

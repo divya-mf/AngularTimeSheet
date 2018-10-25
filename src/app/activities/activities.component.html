@@ -8,7 +8,7 @@
     <div id="newActivity" *ngIf="newActivity">
       <div *ngIf="success" id="success">Registered Successfuly!</div>
       <form method="post" [formGroup]="activityForm">
-        <i class="fa fa-close" title="cancel" (click)="cancel()" id="cancel"></i>
+        <i class="fa fa-close" title="cancel" (click)="callConfirm()" id="cancel"></i>
         <h3>ADD ACTIVITY</h3> 
         <label>Description:</label>
         <textarea matInput rows="3" cols="10" id="description" formControlName="description"></textarea>

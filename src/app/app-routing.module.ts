@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {RegisterComponent} from './register/register.component';
 import {LoginComponent} from './login/login.component';
-import {ContainerComponent} from './container/container.component';
 import {UserComponent} from './user/user.component';
 import {ActivitiesComponent} from './activities/activities.component';
 import { ActivitiesCanDeactivateGuardService } from './activities/activities-can-deactivate.service';
@@ -15,10 +14,6 @@ const routes: Routes = [
   {
     path: 'login',
     component:LoginComponent
-  },
-  {
-    path: 'container',
-    component:ContainerComponent
   },
   {
     path: 'userProfile/:id',
